@@ -68,7 +68,7 @@ export class TaskService{
     // }
     async createTask(createTaskDTO : CreateTaskDTO, user : User):Promise<Task>{
         // return this.taskRepository.createTask(createTaskDTO, user);
-        return this.taskRepository.createTask(createTaskDTO, user, this.connection);
+        return this.taskRepository.createTask(createTaskDTO, user);
 
     }
     // updateTask(id: string, updateTaskDTO : UpdateTaskDTO): Task{

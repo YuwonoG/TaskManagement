@@ -1,5 +1,4 @@
 import {IsNotEmpty, MinLength, Contains, IsOptional} from "class-validator";
-import { Category } from "src/category/category.entity";
 
 export class CreateTaskDTO{
     @IsNotEmpty()
@@ -11,6 +10,5 @@ export class CreateTaskDTO{
     @Contains('description')
     description : string;
 
-    @IsOptional()
-    categories: Category[];
+
 }

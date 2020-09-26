@@ -1,12 +1,11 @@
 import { User } from 'src/auth/user.entity';
-import { Category } from 'src/category/category.entity';
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, UpdateDateColumn  } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn  } from 'typeorm';
 import { TaskStatus } from './task-status.enum';
 
 
 @Entity()
 export class Task extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -30,19 +29,5 @@ export class Task extends BaseEntity {
   @Column()
   userId : number;
 
-  // @ManyToMany(type => Category,category => category.tasks, {cascade: ["insert"]})
-  @ManyToMany(type => Category,category => category.tasks, {eager:true, cascade: ["update"]})
-  @JoinTable(
-    {
-      name: 'tasks_categories',
-      joinColumn : {
-        name : 'task_id'
-      },
-      inverseJoinColumn : {
-        name : 'category_id'
-      },
-
-  })
-  categories: Category[];
 
 }
