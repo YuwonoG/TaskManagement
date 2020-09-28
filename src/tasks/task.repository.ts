@@ -32,7 +32,8 @@ export class TaskRepository extends Repository<Task>{
         const {search, status} = queryTaskDTO;
         const query = this.createQueryBuilder('task');
 
-        query.where('task.userId = :userId', {userId : user.id});
+        // query.leftJoinAndSelect("task.user","user");
+        query.where('task.user = :userParam', {userParam : user.id});
 
         if (status){
             query.andWhere('task.status = :status', {status});
@@ -41,6 +42,8 @@ export class TaskRepository extends Repository<Task>{
             query.andWhere('task.title LIKE :search OR description LIKE :search', {search : `%${search}%` })
         }
         const tasks = await query.getMany();
+        // delete tasks.user;
+
         return tasks;
     }
 }

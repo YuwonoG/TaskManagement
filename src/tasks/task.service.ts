@@ -107,7 +107,20 @@ export class TaskService{
     // }
 
     async deleteTask(id :number, @GetUser() user : User):Promise<void>{
-        const result = await this.taskRepository.delete({id, userId : user.id});
+        //QueryBuilder tdk bisa relation
+        // const queryBuilder = this.taskRepository.createQueryBuilder("task")
+        
+        // const result = await queryBuilder .relation(Task, "user")
+        //                                 // .delete()
+                                        
+        //                                 // .from(Task, "task")
+                                        
+        //                                 .where("task.id = :idParam and task.user = :userParam", {idParam: id, userParam : user})
+        //                                 .execute();
+
+
+         const result = await this.taskRepository.delete({id : id, user : user});
+
 
         if (result.affected === 0 )
         {

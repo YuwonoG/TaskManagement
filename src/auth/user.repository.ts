@@ -37,8 +37,14 @@ export class UserRepository extends Repository<User>{
     
     async validateUserPassword(authCredentialDTO : AuthCredentialDTO): Promise<string>{
         const {username, password} = authCredentialDTO;
-        // console.log(`validateUserPassword ${JSON.stringify({username})}`);
-        const user = await this.findOne({username});
+        console.log(`validateUserPassword ${JSON.stringify({authCredentialDTO})}`);
+        const user = await this .createQueryBuilder("user")
+                                .select(['user.username', 'user.password', 'user.salt'])
+                                .where('user.username = :usernameParam', {usernameParam : username})
+                                .getOne();
+        // const user = await this.findOne({username});
+        console.log(`validateUserPassword ${JSON.stringify({user})}`);
+
         if (user && await user.validatePassword(password))
         {
             return username;
